@@ -1,5 +1,5 @@
 import streamlit as st
-import torch
+import torch-scatter
 from torchvision import transforms, utils, models
 from torchvision.models import resnet50
 import numpy as np
