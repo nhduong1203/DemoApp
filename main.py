@@ -36,10 +36,9 @@ def change_layers(model):
 
 
 if __name__ == '__main__':
-    
-    model_path = "C:/Users/Hai Duong/.cache/torch/hub/checkpoints/resnet50-0676ba61.pth"
-    model = resnet50()
-    model.load_state_dict(torch.load(model_path))
+    model = resnet50(pretrained=True)
+    # model_path = "C:/Users/Hai Duong/.cache/torch/hub/checkpoints/resnet50-0676ba61.pth"
+    # model.load_state_dict(torch.load(model_path))
     model = model.double()
     label = [i for i in range(1000)]
     
@@ -48,12 +47,12 @@ if __name__ == '__main__':
         # st.image(uploaded_file)
         image = Image.open(uploaded_file)
         image = preprocess_image(image)
-        print(model)
+        # print(model)
         
         model.eval()
         tensor_result = model(image)
-        print(tensor_result)
-        print(np.argmax(tensor_result.detach().numpy()))
+        # print(tensor_result)
+        # print(np.argmax(tensor_result.detach().numpy()))
         result = label[np.argmax(tensor_result.detach().numpy())]
 
         image = st.image(uploaded_file, caption=f'This is {result}', use_column_width=True)
