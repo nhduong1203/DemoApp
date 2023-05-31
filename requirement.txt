@@ -1,6 +1,6 @@
 pandas 
 numpy
 streamlit
-torch-scatter -f https://data.pyg.org/whl/torch-1.13.0+cpu.html
+-f data.pyg.org/whl/torch-1.13.0+cu116.html torch-scatter
 opencv-python
 torchvision
