@@ -4,3 +4,4 @@ streamlit
 torch
 opencv-python
 torchvision
+matplotlib
