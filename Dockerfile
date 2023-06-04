@@ -6,7 +6,7 @@ COPY . /app
 
 RUN pip3 install --upgrade pip
 RUN pip3 install torch==2.0.1+cpu torchvision==0.15.2+cpu -f https://download.pytorch.org/whl/torch_stable.html
-RUN pip3 install --upgrade -r requirements.txt
+RUN pip3 install --upgrade -r docker-requirements.txt
 
 
 EXPOSE 8501
