@@ -66,7 +66,7 @@ Some of the terms used are as follows:
 <img src="./images/source_images/example.png" width="900">
 
 ### Training
-We will create a copy of the original image as an input image, and to create a combination of the original image and the style image, we will make the input image the same as both the original image and the style image as possible. To do so, our model will not only perform gradient updates on the weights and bias, but also directly on the input image. One of the most important is to design the appropriate loss function for this backpropagation. The loss function in the current model is design as follows:
+We will create a copy of the original image as an input image, and to create a combination of the original image and the style image, we will make the input image the same as both the original image and the style image as possible. To do so, the model will not perform gradient updates on the weights and bias but directly on the input image. One of the most important is to design the appropriate loss function for this backpropagation. The loss function in the current model is design as follows:
 <img src="./images/source_images/loss.png" width="900">
 
 The loss function will not only be calculated on the output of the model, but also throughout the model after each convolution layer. In there:
@@ -86,7 +86,7 @@ The final loss function is synthesized from content loss and style loss
 final_loss = content_weight * content_loss + style_weight * style_loss
 ```
 
-From this loss function, we perform backpropagation through the weights and directly through the input image.
+From this loss function, we perform backpropagation directly through the input image.
 
 ## References
 [1] [Neural Style Transfer][exp1] \
