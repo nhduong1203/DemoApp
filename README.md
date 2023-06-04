@@ -57,7 +57,7 @@ Access the application at: http://localhost:8501
 
 ### Deep Learning Model VGG-19
 The deep learning model used in this project is named VGG-19, its architecture is shown in the following image: 
-<img src="./images/source_images/vgg19-architecture.png" width="900">
+<img src="./images/source_images/vgg19.png" width="900">
 
 Some of the terms used are as follows:
 * Content image: the original image
