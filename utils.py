@@ -14,45 +14,87 @@ import streamlit as st
 import pandas as pd
 
 imsize = 512 if torch.cuda.is_available() else 128  
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+
 loader = transforms.Compose([
     transforms.Resize((imsize, imsize)),  
     transforms.ToTensor()])
-device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-
-def image_loader(image_name):
-    
-    image = Image.open(image_name)
-    image = loader(image).unsqueeze(0)
-    return image.to(device, torch.float)
-
 
 unloader = transforms.ToPILImage()
 plt.ion()
 
-def imshow(tensor, title=None):
+def image_loader(image_name):
+    """
+    Loads and prepares an image for processing.
+
+    Args:
+        image_name (str): The path or name of the image file.
+
+    Returns:
+        torch.Tensor: The loaded and preprocessed image tensor.
+
+    """
+    image = Image.open(image_name)     # load image
+    image = loader(image).unsqueeze(0) # expand the image for batch_size = 1
+    return image.to(device, torch.float)
+
+
+
+
+def imshow(tensor):
+    """
+    Transfer tensor back to image.
+
+    Args:
+        tensor (torch.tensor): the input tensor.
+
+    Returns:
+        PILImage: PILImage obtained from tensor.
+    """
     image = tensor.cpu().clone()  # we clone the tensor to not do changes on it
     image = image.squeeze(0)      # remove the fake batch dimension
-    image = unloader(image)
-    return image # pause a bit so that plots are updated
+    image = unloader(image)       # to PILImage
+    return image 
 
 def gram_matrix(input):
-    a, b, c, d = input.size()  
-    features = input.view(a * b, c * d) 
-    G = torch.mm(features, features.t()) 
-    return G.div(a * b * c * d)
+    """
+    Calculate the Gram matrix of an input tensor.
 
+    Args:
+        input (torch.tensor): the input tensor.
+
+    Returns:
+        torch.Tensor: The Gram matrix of the input tensor.
+    """
+    a, b, c, d = input.size()                # Get the dimensions of the input tensor. For conv output, this is: a = batchsize, b = number_of_feature_maps, (c,d)=dimensions of a feature map
+    features = input.view(a * b, c * d)      # Reshape the 2D tensor
+    G = torch.mm(features, features.t())     # Calculate the Gram matrix
+    return G.div(a * b * c * d)              # Normalize the Gram matrix by the number of elements
+ 
 
 
 
 class Normalization(nn.Module):
+    """
+    A module for normalizing an image tensor.
+
+    Args:
+        mean (list, tuple, torch.Tensor): The mean values for normalization.
+        std (list, tuple, torch.Tensor): The standard deviation values for normalization.
+    """
+
     def __init__(self, mean, std):
+        """
+        Initializes a new instance of the Normalization module.
+        """
         super(Normalization, self).__init__()
         self.mean = torch.tensor(mean).view(-1, 1, 1)
         self.std = torch.tensor(std).view(-1, 1, 1)
 
     def forward(self, img):
-        # normalize ``img``
+        # normalize ``img`` by subtracting the mean and dividing by the standard deviation
         return (img - self.mean) / self.std
+
 
 
 def download_button(object_to_download, download_filename, button_text, pickle_it=False):
