@@ -9,6 +9,8 @@ A small application used to perform **style transfer**. Style transfer is a comp
 * [![PyTorch][torch-img]][torch-url]
 
 ## Technical overview
+### Deep Learning Model
+The deep learning model used in this project is named VGG-19, its architecture is shown in the following image: 
 
 ## How to install
 ### Github
@@ -30,7 +32,19 @@ cd TransferApp
 pip install requirements.txt
 streamlit run main.py
 ```
+### Docker
+**Link Docker:** [Docker Repo][docker-url]
 
+**Install Project:**
+```
+# Pull docker
+docker pull sieucun/transfer_app
+
+# Run image
+docker run --name test -p 8501:8501 transfer_app
+
+Access the application at: http://localhost:8501
+```
 
 ## Acknowledgments
 
@@ -42,3 +56,5 @@ streamlit run main.py
 
 [torch-img]: https://img.shields.io/badge/PyTorch-%23EE4C2C.svg?style=for-the-badge&logo=PyTorch&logoColor=white
 [torch-url]: https://pytorch.org/
+
+[docker-url]: https://hub.docker.com/repository/docker/sieucun/transfer_app/general
