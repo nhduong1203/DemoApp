@@ -46,7 +46,7 @@ streamlit run main.py
 docker pull sieucun/transfer_app
 
 # Run image
-docker run --name test -p 8501:8501 transfer_app
+docker run --name test -p 8501:8501 sieucun/transfer_app
 
 Access the application at: http://localhost:8501
 ```
