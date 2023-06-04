@@ -97,7 +97,7 @@ def get_input_optimizer(input_img):
 
 
 def run_style_transfer(cnn, normalization_mean, normalization_std,
-                       content_img, style_img, input_img, num_steps=200,
+                       content_img, style_img, input_img, num_steps=150,
                        style_weight=100000, content_weight=5):
     """_summary_
 
