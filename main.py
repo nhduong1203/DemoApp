@@ -6,9 +6,8 @@ import numpy as np
 import torch.nn as nn
 from PIL import Image
 from train import run_style_transfer
-from utils import Normalization, image_loader,imshow
+from utils import Normalization, image_loader, imshow, download_button
 import io
-from streamlit_download_button import download_button
 
 @st.cache_resource
 def load_model():
