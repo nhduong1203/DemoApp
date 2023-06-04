@@ -88,6 +88,14 @@ final_loss = content_weight * content_loss + style_weight * style_loss
 
 From this loss function, we perform backpropagation directly through the input image.
 
+### Optimizer
+We will use optimizer which is the L-BFGS algorithm for the input image. 
+```
+def get_input_optimizer(input_img):
+    optimizer = optim.LBFGS([input_img])
+    return optimizer
+```
+
 ## References
 [1] [Neural Style Transfer][exp1] \
 [2] [Streamlit tutorial][exp2] \
