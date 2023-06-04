@@ -18,14 +18,12 @@ def get_style_model_and_losses(cnn, normalization_mean, normalization_std,
     # normalization module
     normalization = Normalization(normalization_mean, normalization_std).to(device)
 
-    # just in order to have an iterable access to or list of content/style
-    # losses
     content_losses = []
     style_losses = []
 
     model = nn.Sequential(normalization)
 
-    i = 0  # increment every time we see a conv
+    i = 0  
     for layer in cnn.children():
         if isinstance(layer, nn.Conv2d):
             i += 1
@@ -56,7 +54,6 @@ def get_style_model_and_losses(cnn, normalization_mean, normalization_std,
             model.add_module("style_loss_{}".format(i), style_loss)
             style_losses.append(style_loss)
 
-    # now we trim off the layers after the last content and style losses
     for i in range(len(model) - 1, -1, -1):
         if isinstance(model[i], ContentLoss) or isinstance(model[i], StyleLoss):
             break
@@ -66,14 +63,12 @@ def get_style_model_and_losses(cnn, normalization_mean, normalization_std,
     return model, style_losses, content_losses
 
 def get_input_optimizer(input_img):
-    # this line to show that input is a parameter that requires a gradient
     optimizer = optim.LBFGS([input_img])
     return optimizer
 
 def run_style_transfer(cnn, normalization_mean, normalization_std,
                        content_img, style_img, input_img, num_steps=200,
                        style_weight=100000, content_weight=5):
-    """Run the style transfer."""
     print('Building the style transfer model..')
     model, style_losses, content_losses = get_style_model_and_losses(cnn,
         normalization_mean, normalization_std, style_img, content_img)
