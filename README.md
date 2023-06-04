@@ -3,14 +3,12 @@
 ## Introduction
 A small application used to perform **style transfer**. Style transfer is a computer vision technique that allows us to recompose the content of an image in the style of another. If you’ve ever imagined what a photo might look like if it were painted by a famous artist, then style transfer is the computer vision technique that turns this into a reality.
 
-## Built With
+### Built With
 * [![Python][Python_img]][Python-url]
 * [![Streamlit][Streamlit_img]][Streamlit-url]
 * [![PyTorch][torch-img]][torch-url]
 
 ## Technical overview
-### Deep Learning Model
-The deep learning model used in this project is named VGG-19, its architecture is shown in the following image: 
 
 ## How to install
 ### Github
@@ -45,6 +43,11 @@ docker run --name test -p 8501:8501 transfer_app
 
 Access the application at: http://localhost:8501
 ```
+## Experiments
+### Deep Learning Model
+The deep learning model used in this project is named VGG-19, its architecture is shown in the following image: 
+<img src="./images/source_images/vgg19-architecture.png" width="900">
+
 
 ## Acknowledgments
 
