@@ -10,7 +10,10 @@ from utils import Normalization, image_loader,imshow
 import io
 from streamlit_download_button import download_button
 
-
+@st.cache_resource
+def load_model():
+    cnn = models.vgg19(pretrained=True).features.to(device).eval()
+    return cnn
 
 
 if __name__ == '__main__':
@@ -19,15 +22,16 @@ if __name__ == '__main__':
     cnn_normalization_std = torch.tensor([0.229, 0.224, 0.225]).to(device)
     imsize = 128
 
-
-
-    cnn = models.vgg19(pretrained=True).features.to(device).eval()
+    with st.spinner("Downloading pretrained model may take a few minutes. Please wait ^^ ..."):
+        cnn = load_model()
 
     with st.sidebar:
         with st.form("Upload File"):
             origin_file = st.file_uploader("Chọn ảnh gốc")
             style_file = st.file_uploader("Chọn ảnh phong cách")
             submit = st.form_submit_button("Submit")
+
+    
     if origin_file is not None and style_file is not None:
         img1, img2 = st.columns(2)
         with img1:
@@ -53,12 +57,7 @@ if __name__ == '__main__':
         with st.columns(5)[2]:
             download_button_str = download_button(output_bytes, "transfer_style_image.png","Download image")
             st.markdown(download_button_str, unsafe_allow_html=True)
-            # st.download_button(
-            #     label = "Download image",
-            #     data = output_bytes,
-            #     file_name = "transfer_style_image.png",
-            #     mime = "image/png"
-            # )
+
            
         st.stop()
         

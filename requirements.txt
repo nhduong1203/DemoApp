@@ -1,7 +1,7 @@
 pandas 
 numpy
 streamlit
-torch
 opencv-python
-torchvision
+# torch
+# torchvision
 matplotlib
